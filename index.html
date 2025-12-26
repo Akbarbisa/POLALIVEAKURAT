@@ -3,52 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KISAHHANGAT AI ENGINE v3.0</title>
+    <title>KISAHHANGAT AI ENGINE v3.1</title>
     <style>
         * { box-sizing: border-box; }
         body {
             margin: 0;
             padding: 0;
-            /* Background Tema Casino/Slot */
-            background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url('https://img.freepik.com/free-vector/casino-slot-machine-banner-with-falling-gold-coins_1017-31535.jpg');
+            /* BACKGROUND SLOT NYATA - Menggunakan gambar casino/slot berkualitas */
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), 
+                        url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: white;
         }
 
         .engine-card {
-            background: rgba(20, 20, 20, 0.95);
+            background: rgba(15, 15, 15, 0.95);
             border: 2px solid #ffcc00;
             border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 420px;
+            padding: 25px;
+            width: 95%;
+            max-width: 400px;
             text-align: center;
-            box-shadow: 0 0 40px rgba(255, 204, 0, 0.3);
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.4);
+            color: white;
+            position: relative;
+            overflow: hidden;
         }
 
-        h2 { color: #ffcc00; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 2px; }
-        .status-badge { font-size: 12px; color: #00ff00; font-weight: bold; margin-bottom: 20px; display: block; }
+        /* Efek Kilat di Header */
+        h2 { 
+            color: #ffcc00; 
+            margin: 0; 
+            font-size: 24px;
+            text-shadow: 0 0 10px #ffcc00;
+        }
+
+        .server-status {
+            font-size: 11px;
+            color: #00ff00;
+            font-weight: bold;
+            display: block;
+            margin: 5px 0 20px 0;
+            text-transform: uppercase;
+        }
 
         .game-select {
             width: 100%;
             padding: 12px;
-            background: #111;
-            color: gold;
+            background: #222;
+            color: #ffcc00;
             border: 1px solid #444;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             margin-bottom: 20px;
-            cursor: pointer;
+            outline: none;
         }
 
-        .btn-main {
+        .btn-analyze {
             width: 100%;
             padding: 15px;
             background: linear-gradient(to bottom, #ffcc00, #cc9900);
@@ -58,29 +75,26 @@
             font-weight: bold;
             font-size: 18px;
             cursor: pointer;
-            transition: 0.3s;
+            text-transform: uppercase;
         }
 
-        .btn-main:hover { transform: scale(1.02); box-shadow: 0 0 15px #ffcc00; }
-
-        /* Loader */
+        /* Progress Loader */
         #loader { display: none; margin-top: 25px; }
-        .progress-container { width: 100%; background: #333; height: 15px; border-radius: 10px; overflow: hidden; border: 1px solid #555; }
-        .progress-fill { width: 0%; height: 100%; background: gold; transition: 0.1s; box-shadow: 0 0 10px gold; }
+        .bar-container { width: 100%; background: #333; height: 15px; border-radius: 10px; border: 1px solid #555; overflow: hidden; }
+        .bar-fill { width: 0%; height: 100%; background: #ffcc00; box-shadow: 0 0 10px #ffcc00; transition: 0.1s; }
 
-        /* Result Area */
-        #result-box {
+        /* Hasil Pola Area */
+        #result-area {
             display: none;
             margin-top: 25px;
-            padding: 20px;
+            padding: 15px;
             border: 2px dashed #ffcc00;
             border-radius: 15px;
             background: rgba(255, 204, 0, 0.05);
-            animation: fadeIn 0.5s ease-in;
         }
 
-        .pola-text { font-size: 20px; color: #00ffcc; font-weight: bold; line-height: 1.6; margin: 15px 0; }
-        
+        .pola-text { font-size: 19px; color: #00ffcc; font-weight: bold; line-height: 1.6; margin: 10px 0; }
+
         .btn-gas {
             display: block;
             background: #ff4500;
@@ -90,73 +104,74 @@
             border-radius: 50px;
             font-weight: bold;
             margin-top: 15px;
-            animation: pulse 1.5s infinite;
+            animation: pulse 1s infinite;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(255, 69, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); } }
+        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(255,69,0,0.7);} 70% {box-shadow: 0 0 0 12px rgba(255,69,0,0);} 100% {box-shadow: 0 0 0 0 rgba(255,69,0,0);} }
     </style>
 </head>
 <body>
 
-<audio id="snd-scan" src="https://www.soundjay.com/buttons/button-29.mp3"></audio>
-<audio id="snd-win" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+<audio id="sndScan" src="https://www.soundjay.com/buttons/button-29.mp3"></audio>
+<audio id="sndWin" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
 
 <div class="engine-card">
-    <h2>KISAHHANGAT AI v3.0</h2>
-    <span class="status-badge">● SERVER STATUS: ONLINE (GACOR)</span>
+    <h2>KISAHHANGAT AI v3.1</h2>
+    <span class="server-status">● SERVER STATUS: ONLINE (GACOR)</span>
 
-    <select id="game-list" class="game-select">
+    <select id="gameList" class="game-select">
         <optgroup label="PRAGMATIC PLAY">
             <option>Gates of Olympus 1000</option>
-            <option>Starlight Princess</option>
-            <option>Sweet Bonanza</option>
-            <option>Sugar Rush</option>
+            <option>Starlight Princess 1000</option>
+            <option>Sweet Bonanza Xmas</option>
+            <option>Sugar Rush 1000</option>
             <option>Wild West Gold</option>
+            <option>Wisdom of Athena</option>
+            <option>Gates of Gatot Kaca</option>
         </optgroup>
         <optgroup label="PG SOFT">
             <option>Mahjong Ways 2</option>
             <option>Lucky Neko</option>
             <option>Wild Bandito</option>
             <option>Treasures of Aztec</option>
+            <option>Dreams of Macau</option>
+            <option>Caishen Wins</option>
             <option>Ways of the Qilin</option>
         </optgroup>
     </select>
 
-    <button onclick="runAnalyze()" class="btn-main" id="btn-text">ANALISIS SEKARANG</button>
+    <button onclick="startAnalyze()" class="btn-analyze" id="btnText">ANALISIS SEKARANG</button>
 
     <div id="loader">
-        <div class="progress-container"><div id="fill" class="progress-fill"></div></div>
-        <p id="loading-msg" style="font-size: 12px; margin-top: 10px; color: #aaa;">Menghubungkan ke API server...</p>
+        <div class="bar-container"><div id="fill" class="bar-fill"></div></div>
+        <p id="msg" style="font-size: 11px; margin-top: 8px; color: #aaa;">Menghubungkan ke API server...</p>
     </div>
 
-    <div id="result-box">
-        <div style="font-size: 11px; color: gold; text-transform: uppercase;">Rekomendasi Pola:</div>
-        <div id="pola-output" class="pola-text"></div>
-        <div id="time-stamp" style="font-size: 10px; color: #777;"></div>
-        
+    <div id="result-area">
+        <div style="font-size: 11px; color: #ffcc00; text-transform: uppercase;">Rekomendasi Pola:</div>
+        <div id="polaOutput" class="pola-text"></div>
+        <div id="timeStamp" style="font-size: 10px; color: #777;"></div>
         <a href="https://kisahhangat.com/" target="_blank" class="btn-gas">GAS KE SITUS UTAMA ➔</a>
     </div>
 </div>
 
 <script>
-function runAnalyze() {
-    const btn = document.getElementById('btn-text');
+function startAnalyze() {
+    const btn = document.getElementById('btnText');
     const loader = document.getElementById('loader');
     const fill = document.getElementById('fill');
-    const msg = document.getElementById('loading-msg');
-    const result = document.getElementById('result-box');
-    const sndScan = document.getElementById('snd-scan');
-    const sndWin = document.getElementById('snd-win');
+    const msg = document.getElementById('msg');
+    const result = document.getElementById('result-area');
+    const sndScan = document.getElementById('sndScan');
+    const sndWin = document.getElementById('sndWin');
 
-    // Setup Awal
     btn.disabled = true;
     result.style.display = 'none';
     loader.style.display = 'block';
     sndScan.play();
 
     let width = 0;
-    const labels = ["Menganalisis Algoritma...", "Mencari Celah Scatter...", "Menghitung RTP Live...", "Selesai!"];
+    const labels = ["Scanning RTP...", "Mencari Celah Scatter...", "Injecting Script...", "Finalizing Pola..."];
     
     const interval = setInterval(() => {
         if (width >= 100) {
@@ -169,30 +184,11 @@ function runAnalyze() {
             width += 2;
             fill.style.width = width + '%';
             if(width == 20) msg.innerText = labels[0];
-            if(width == 50) msg.innerText = labels[1];
-            if(width == 80) msg.innerText = labels[2];
+            if(width == 40) msg.innerText = labels[1];
+            if(width == 70) msg.innerText = labels[2];
+            if(width == 90) msg.innerText = labels[3];
         }
-    }, 50);
+    }, 45);
 
     function showResult() {
-        loader.style.display = 'none';
-        result.style.display = 'block';
-        btn.disabled = false;
-        
-        const polas = [
-            "⚡ 15x Manual (DC OFF)<br>🚀 30x Turbo (DC ON)<br>⏩ 50x Quick (DC ON)",
-            "⏩ 20x Quick (DC OFF)<br>⚡ 10x Manual (DC ON)<br>💎 BUY SPIN",
-            "🚀 100x Turbo (DC ON)<br>⏩ 10x Quick (DC OFF)<br>⚡ 20x Manual (DC ON)"
-        ];
-        
-        const randomPola = polas[Math.floor(Math.random() * polas.length)];
-        const time = new Date().toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
-        
-        document.getElementById('pola-output').innerHTML = randomPola;
-        document.getElementById('time-stamp').innerText = "Terakhir diupdate: Pukul " + time + " WIB";
-    }
-}
-</script>
-
-</body>
-</html>
+        loader
