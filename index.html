@@ -3,235 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KISAHHANGAT - ENGINE V3.0</title>
     <style>
-        /* CSS UNTUK TAMPILAN MEWAH */
-        .engine-card {
-            background: linear-gradient(145deg, #121212, #1a1a1a);
-            border: 2px solid #ffcc00;
-            border-radius: 20px;
-            padding: 25px;
-            max-width: 400px;
-            margin: 20px auto;
-            font-family: 'Segoe UI', Roboto, sans-serif;
-            color: white;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(255, 204, 0, 0.2);
-        }
-
-        .engine-header h3 {
+        body {
             margin: 0;
-            color: #ffcc00;
-            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
-            font-size: 22px;
-            letter-spacing: 1px;
+            padding: 0;
+            /* Background Tema Slot (Gelap & Mewah) */
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://img.freepik.com/free-vector/casino-slot-machine-banner-with-falling-gold-coins_1017-31535.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
+        .engine-container {
+            background: rgba(20, 20, 20, 0.95);
+            border: 3px solid #ffcc00;
+            border-radius: 25px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 0 30px #ffcc0066;
+            color: white;
+        }
+
+        .header h2 { color: #ffcc00; margin-bottom: 5px; text-shadow: 2px 2px #000; }
+        
         .game-select {
             width: 100%;
-            padding: 12px;
+            padding: 15px;
             margin: 20px 0;
-            background: #222;
-            border: 1px solid #444;
-            color: white;
+            background: #333;
+            color: gold;
+            border: 1px solid gold;
             border-radius: 10px;
-            outline: none;
+            font-weight: bold;
         }
 
-        .btn-generate {
+        .btn-analyze {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(to bottom, #ffcc00, #cc9900);
+            background: linear-gradient(to bottom, #ffdd00, #b8860b);
             border: none;
-            border-radius: 10px;
-            color: black;
+            border-radius: 50px;
             font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-        }
-
-        .btn-generate:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 15px #ffcc00;
-        }
-
-        .btn-generate:disabled {
-            background: #555;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* PROGRESS BAR */
-        .loading-container {
-            display: none;
-            margin-top: 25px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            background: #333;
-            height: 12px;
-            border-radius: 6px;
-            overflow: hidden;
-            border: 1px solid #444;
-        }
-
-        .progress-fill {
-            width: 0%;
-            height: 100%;
-            background: linear-gradient(90deg, #ffcc00, #ffffff);
-            transition: 0.2s;
-        }
-
-        #status-text {
-            font-size: 13px;
-            color: #aaa;
-            margin-top: 10px;
-            font-style: italic;
-        }
-
-        /* HASIL POLA */
-        .result-box {
-            display: none;
-            margin-top: 25px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px dashed #ffcc00;
-            border-radius: 15px;
-            padding: 20px;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .pola-item {
             font-size: 18px;
-            font-weight: bold;
-            color: #00ffcc;
-            margin: 10px 0;
-            line-height: 1.6;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
+
+        /* Progress Bar */
+        #loader { display: none; margin-top: 20px; }
+        .bar-bg { width: 100%; background: #222; height: 20px; border-radius: 10px; overflow: hidden; border: 1px solid #444; }
+        .bar-fill { width: 0%; height: 100%; background: gold; box-shadow: 0 0 10px gold; }
+
+        /* Result Box */
+        #result { display: none; margin-top: 25px; padding: 20px; border: 2px dashed #00ff00; border-radius: 15px; background: rgba(0,255,0,0.05); }
+        .pola-text { font-size: 20px; color: #00ffcc; font-weight: bold; margin: 15px 0; line-height: 1.5; }
 
         .btn-gas {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 10px 25px;
+            display: block;
             background: #ff4500;
             color: white;
             text-decoration: none;
-            border-radius: 50px;
+            padding: 12px;
+            border-radius: 10px;
             font-weight: bold;
-            animation: pulse 1.5s infinite;
+            margin-top: 15px;
+            animation: pulse 1s infinite;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes pulse { 
-            0% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 69, 0, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 69, 0, 0); }
-        }
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.05);} 100% {transform: scale(1);} }
     </style>
 </head>
 <body>
 
-<div class="engine-card">
-    <div class="engine-header">
-        <h3>KISAHHANGAT ENGINE v2.5</h3>
-        <p style="font-size: 11px; color: #888;">AI ANALYZER PRAGMATIC & PG SOFT</p>
+<audio id="snd-scan" src="https://www.soundjay.com/buttons/button-29.mp3"></audio>
+<audio id="snd-win" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3"></audio>
+
+<div class="engine-container">
+    <div class="header">
+        <h2>KISAHHANGAT AI v3.0</h2>
+        <small>SERVER STATUS: <span style="color:#00ff00;">ONLINE (GACOR)</span></small>
     </div>
 
-    <select id="game-select" class="game-select">
-        <optgroup label="Pragmatic Play">
-            <option value="Gates of Olympus">Gates of Olympus</option>
-            <option value="Starlight Princess">Starlight Princess</option>
-            <option value="Sweet Bonanza">Sweet Bonanza</option>
+    <select id="game-list" class="game-select">
+        <optgroup label="PRAGMATIC PLAY">
+            <option>Gates of Olympus 1000</option>
+            <option>Starlight Princess</option>
+            <option>Sweet Bonanza</option>
+            <option>Sugar Rush</option>
+            <option>Wild West Gold</option>
+            <option>Wisdom of Athena</option>
         </optgroup>
-        <optgroup label="PG Soft">
-            <option value="Mahjong Ways 2">Mahjong Ways 2</option>
-            <option value="Lucky Neko">Lucky Neko</option>
-            <option value="Wild Bandito">Wild Bandito</option>
-        </optgroup>
-    </select>
-
-    <button onclick="startAnalyze()" id="btn-generate" class="btn-generate">
-        ANALISIS POLA GACOR
-    </button>
-
-    <div id="loading-area" class="loading-container">
-        <div class="progress-bar">
-            <div id="bar" class="progress-fill"></div>
-        </div>
-        <p id="status-text">Menunggu perintah...</p>
-    </div>
-
-    <div id="result-area" class="result-box">
-        <span style="color: #ffcc00; font-size: 12px; text-transform: uppercase;">Hasil Analisis Server:</span>
-        <div id="pola-text" class="pola-item"></div>
-        <p id="time-stamp" style="font-size: 10px; color: #777;"></p>
-        
-        <a href="https://kisahhangat.com/" target="_blank" class="btn-gas">GAS POL SEKARANG ➔</a>
-    </div>
-</div>
-
-<script>
-function startAnalyze() {
-    const btn = document.getElementById('btn-generate');
-    const loading = document.getElementById('loading-area');
-    const result = document.getElementById('result-area');
-    const bar = document.getElementById('bar');
-    const status = document.getElementById('status-text');
-    const polaDisplay = document.getElementById('pola-text');
-    const timeDisplay = document.getElementById('time-stamp');
-    const game = document.getElementById('game-select').value;
-
-    // Reset view
-    btn.disabled = true;
-    result.style.display = 'none';
-    loading.style.display = 'block';
-    
-    let width = 0;
-    const steps = [
-        {w: 20, t: "Connecting to server..."},
-        {w: 45, t: "Scanning RTP " + game + "..."},
-        {w: 70, t: "Bypassing Algorithm..."},
-        {w: 90, t: "Finalizing Pola Gacor..."},
-        {w: 100, t: "Done!"}
-    ];
-
-    let stepIdx = 0;
-    const interval = setInterval(() => {
-        if (width >= 100) {
-            clearInterval(interval);
-            setTimeout(showPola, 500);
-        } else {
-            width += 2;
-            bar.style.width = width + '%';
-            if (stepIdx < steps.length && width >= steps[stepIdx].w) {
-                status.innerText = steps[stepIdx].t;
-                stepIdx++;
-            }
-        }
-    }, 50);
-
-    function showPola() {
-        const polas = [
-            "⚡ 10x Manual (DC Off)<br>🚀 30x Turbo (DC On)<br>⏩ 100x Quick (DC On)",
-            "⏩ 20x Quick (DC Off)<br>⚡ 50x Manual (DC On)<br>💎 Buy Spin",
-            "🚀 80x Turbo (DC On)<br>⏩ 20x Quick (DC Off)<br>⚡ 10x Manual (DC On)",
-            "⚡ 15x Manual (DC Off)<br>🚀 50x Turbo (DC On)<br>⏩ 50x Quick (DC On)"
-        ];
-        
-        const randomPola = polas[Math.floor(Math.random() * polas.length)];
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
-
-        loading.style.display = 'none';
-        result.style.display = 'block';
-        polaDisplay.innerHTML = randomPola;
-        timeDisplay.innerText = "Terakhir diupdate: Hari ini, pukul " + timeStr + " WIB";
-        btn.disabled = false;
-        bar.style.width = '0%';
-    }
-}
-</script>
-
-</body>
-</html>
+        <optgroup label="PG SOFT">
+            <option>Mahjong Ways 2</option>
+            <option>Lucky Neko</option>
+            <option>Wild Bandito</option>
+            <option>Treasures of Aztec</option>
+            <option>Dreams of Macau</option>
