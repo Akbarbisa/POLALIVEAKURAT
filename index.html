@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KISAH LIVE POLA - ANTI LAG</title>
+    <title>KISAH LIVE POLA - SMART LOGIC</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -11,29 +11,182 @@
             background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), 
                         url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?q=80&w=2070&auto=format&fit=crop');
             background-size: cover; background-position: center; background-attachment: fixed;
-            font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }
         .engine-card {
-            background: rgba(15, 15, 15, 0.98); border: 2px solid #ffcc00; border-radius: 20px;
-            padding: 25px; width: 95%; max-width: 400px; text-align: center; box-shadow: 0 0 30px #ffcc0066; color: white;
+            background: rgba(10, 10, 10, 0.98); border: 2px solid #ffcc00; border-radius: 20px;
+            padding: 25px; width: 95%; max-width: 450px; text-align: center; box-shadow: 0 0 35px rgba(255, 204, 0, 0.5); color: white;
         }
-        .input-user {
+        h2 { color: #ffcc00; margin: 0; font-size: 26px; text-shadow: 0 0 10px #ffcc00; }
+        .server-status { font-size: 11px; color: #00ff00; font-weight: bold; display: block; margin: 5px 0 15px 0; }
+        
+        input {
             width: 100%; padding: 12px; background: #222; border: 1px solid #444;
-            color: white; border-radius: 10px; margin-bottom: 15px; text-align: center; outline: none;
+            color: white; border-radius: 10px; margin-bottom: 10px; outline: none; text-align: center;
         }
+
         .game-select {
-            width: 100%; padding: 12px; background: #1a1a1a; color: gold; border: 1px solid #444;
-            border-radius: 10px; margin-bottom: 20px; outline: none;
+            width: 100%; padding: 14px; background: #1a1a1a; color: gold; border: 1px solid #444;
+            border-radius: 12px; font-size: 15px; margin-bottom: 20px; outline: none;
         }
         .btn-analyze {
             width: 100%; padding: 16px; background: linear-gradient(to bottom, #ffcc00, #cc9900);
-            border: none; border-radius: 12px; color: black; font-weight: bold; font-size: 18px; cursor: pointer;
+            border: none; border-radius: 12px; color: black; font-weight: bold; font-size: 18px; cursor: pointer; text-transform: uppercase;
         }
-        #loader { display: none; margin-top: 20px; }
-        .bar-container { width: 100%; background: #333; height: 15px; border-radius: 10px; overflow: hidden; }
-        .bar-fill { width: 0%; height: 100%; background: #ffcc00; transition: 0.1s; }
+        #loader { display: none; margin-top: 25px; }
+        .bar-container { width: 100%; background: #222; height: 16px; border-radius: 8px; border: 1px solid #555; overflow: hidden; }
+        .bar-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #ffcc00, #fff); transition: 0.1s; }
+        
         #result-area {
-            display: none; margin-top: 20px; padding: 15px; border: 2px dashed #ffcc00;
-            border-radius: 15px; background: rgba(255, 204, 0, 0.1);
+            display: none; margin-top: 25px; padding: 18px; border: 2px dashed #ffcc00;
+            border-radius: 15px; background: rgba(255, 204, 0, 0.08); animation: fadeIn 0.4s;
         }
-        .pola-text { font-size: 20px; color: #00ffcc; font-weight: bold; line-height: 1.6; }
+        .pola-text { font-size: 19px; color: #00ffcc; font-weight: bold; line-height: 1.6; margin: 12px 0; }
+        .btn-gas {
+            display: block; background: #ff4500; color: white; text-decoration: none;
+            padding: 14px; border-radius: 50px; font-weight: bold; margin-top: 15px; animation: pulse 1.2s infinite;
+        }
+        @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(255,69,0,0.8);} 70% {box-shadow: 0 0 0 15px rgba(255,69,0,0);} 100% {box-shadow: 0 0 0 0 rgba(255,69,0,0);} }
+    </style>
+</head>
+<body>
+
+<div class="engine-card">
+    <h2>KISAH LIVE POLA</h2>
+    <span class="server-status">● STATUS: SERVER GACOR ONLINE</span>
+
+    <input type="text" id="username" placeholder="MASUKKAN USERNAME ANDA...">
+
+    <select id="gameList" class="game-select">
+        <optgroup label="PRAGMATIC PLAY (TOP 25)">
+            <option value="pragmatic">Gates of Olympus 1000</option>
+            <option value="pragmatic">Starlight Princess 1000</option>
+            <option value="pragmatic">Sweet Bonanza Xmas</option>
+            <option value="pragmatic">Sugar Rush 1000</option>
+            <option value="pragmatic">Mahjong Wins</option>
+            <option value="pragmatic">Wisdom of Athena</option>
+            <option value="pragmatic">Wild West Gold</option>
+            <option value="pragmatic">Gates of Gatot Kaca</option>
+            <option value="pragmatic">Aztec Gems</option>
+            <option value="pragmatic">Joker's Jewels</option>
+            <option value="pragmatic">Cleocatra</option>
+            <option value="pragmatic">5 Lions Megaways</option>
+            <option value="pragmatic">Fruit Party 2</option>
+            <option value="pragmatic">The Dog House</option>
+            <option value="pragmatic">Big Bass Splash</option>
+            <option value="pragmatic">Buffalo King</option>
+            <option value="pragmatic">Madame Destiny</option>
+            <option value="pragmatic">Release the Kraken</option>
+            <option value="pragmatic">Sword of Ares</option>
+            <option value="pragmatic">Candy Village</option>
+            <option value="pragmatic">Juicy Fruits</option>
+            <option value="pragmatic">Fire Strike</option>
+            <option value="pragmatic">Santa's Great Gifts</option>
+            <option value="pragmatic">Rise of Giza</option>
+            <option value="pragmatic">Chicken Chase</option>
+        </optgroup>
+        <optgroup label="PG SOFT (TOP 25)">
+            <option value="pgsoft">Mahjong Ways 2</option>
+            <option value="pgsoft">Lucky Neko</option>
+            <option value="pgsoft">Wild Bandito</option>
+            <option value="pgsoft">Treasures of Aztec</option>
+            <option value="pgsoft">Dreams of Macau</option>
+            <option value="pgsoft">Caishen Wins</option>
+            <option value="pgsoft">Ganesha Fortune</option>
+            <option value="pgsoft">Ways of the Qilin</option>
+            <option value="pgsoft">Leprechaun Riches</option>
+            <option value="pgsoft">Dragon Hatch</option>
+            <option value="pgsoft">Phoenix Rises</option>
+            <option value="pgsoft">Candy Burst</option>
+            <option value="pgsoft">Shaolin Soccer</option>
+            <option value="pgsoft">Captain's Bounty</option>
+            <option value="pgsoft">Double Fortune</option>
+            <option value="pgsoft">Gem Saviour</option>
+            <option value="pgsoft">Circus Delight</option>
+            <option value="pgsoft">Queen of Bounty</option>
+            <option value="pgsoft">Heist Stakes</option>
+            <option value="pgsoft">Rise of Apollo</option>
+            <option value="pgsoft">Mermaid Riches</option>
+            <option value="pgsoft">Thai River Wonders</option>
+            <option value="pgsoft">Bali Vacation</option>
+            <option value="pgsoft">Crypto Gold</option>
+            <option value="pgsoft">Majestic Treasures</option>
+        </optgroup>
+    </select>
+
+    <button onclick="startAnalyze()" class="btn-analyze" id="btnText">GENERATING SMART POLA</button>
+
+    <div id="loader">
+        <div class="bar-container"><div id="fill" class="bar-fill"></div></div>
+        <p id="msg" style="font-size: 11px; margin-top: 10px; color: #aaa;">Syncing Algorithm...</p>
+    </div>
+
+    <div id="result-area">
+        <div id="userDisplay" style="font-size: 14px; color: #00ff00; font-weight: bold; margin-bottom: 5px;"></div>
+        <div id="gameNameDisplay" style="font-size: 13px; color: #ffcc00; margin-bottom: 5px;"></div>
+        <div id="polaOutput" class="pola-text"></div>
+        <div id="extraTip" style="font-size: 11px; color: #ff4500; font-weight: bold; margin-bottom: 10px;"></div>
+        <div id="timeStamp" style="font-size: 10px; color: #777;"></div>
+        <a href="https://kisahhangat.com/" target="_blank" class="btn-gas">KLAIM JP SEKARANG ➔</a>
+    </div>
+</div>
+
+<script>
+function startAnalyze() {
+    const user = document.getElementById('username').value;
+    if(!user) { alert("Masukkan Username untuk sinkronisasi pola!"); return; }
+
+    const btn = document.getElementById('btnText');
+    const loader = document.getElementById('loader');
+    const fill = document.getElementById('fill');
+    const msg = document.getElementById('msg');
+    const result = document.getElementById('result-area');
+    const gameType = document.getElementById('gameList').value;
+    const gameName = document.getElementById('gameList').options[document.getElementById('gameList').selectedIndex].text;
+
+    btn.disabled = true;
+    result.style.display = 'none';
+    loader.style.display = 'block';
+
+    // FIX STUCK: Gunakan try-catch untuk audio
+    try {
+        const sndScan = new Audio('https://www.soundjay.com/buttons/button-29.mp3');
+        sndScan.play().catch(e => console.log("Audio diblokir browser"));
+    } catch (e) {}
+
+    let width = 0;
+    const interval = setInterval(() => {
+        if (width >= 100) {
+            clearInterval(interval);
+            try {
+                const sndWin = new Audio('https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3');
+                sndWin.play().catch(e => console.log("Audio diblokir browser"));
+            } catch (e) {}
+            showResult(user, gameType, gameName);
+        } else {
+            width += 5; // Lebih cepat prosesnya biar gak bosan
+            fill.style.width = width + '%';
+            if(width == 20) msg.innerText = "Connecting to Server...";
+            if(width == 50) msg.innerText = "Analyzing ID: " + user;
+            if(width == 80) msg.innerText = "Finding " + gameName + " Pattern...";
+        }
+    }, 60);
+
+    function showResult(uName, type, gName) {
+        loader.style.display = 'none';
+        result.style.display = 'block';
+        btn.disabled = false;
+        
+        const rand = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+        const tips = ["Naikkan Stake 2x lipat jika sisa saldo 50%", "Wajib WD jika sudah profit 3x lipat", "Ulangi pola jika belum muncul Scatter", "Ganti game jika Pola ke-2 tidak pecah"];
+
+        let p1, p2, p3, tip;
+
+        if (type === "pragmatic") {
+            p1 = "⚡ " + rand(10, 30) + "x Manual (DC " + (Math.random() > 0.5 ? "ON" : "OFF") + ")";
+            p2 = "🚀 " + rand(30, 70) + "x Turbo (DC ON)";
+            p3 = "⏩ " + rand(50, 100) + "x Quick (DC " + (Math.random() > 0.5 ? "ON" : "OFF") + ")";
+            tip = "✨ TIPS: " + (Math.random() > 0.7 ? "Langsung BUY SPIN" : tips[rand(0, 3)]);
+        } else {
+            p1 = "🌀 " + rand(10, 20) + "x Manual";
